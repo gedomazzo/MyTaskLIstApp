@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Task> taskList;
     private TaskAdapter adapter;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
                 taskList.add(new Task(title));
                 adapter.notifyItemInserted(taskList.size() - 1);
                 etNewTask.setText("");
+
+
             }
         });
     }

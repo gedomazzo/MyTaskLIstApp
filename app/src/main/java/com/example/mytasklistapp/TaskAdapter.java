@@ -3,6 +3,7 @@ package com.example.mytasklistapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private List<Task> tasks;
 
+
     public TaskAdapter(List<Task> tasks) { this.tasks = tasks; }
 
     @NonNull
@@ -20,6 +22,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
         return new TaskViewHolder(view);
+
+
+
     }
 
     @Override
@@ -34,6 +39,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.cbDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
             currentTask.setDone(isChecked);
         });
+
+        holder.tvTitle.setText(currentTask.getTitle());
+
+        holder.delite.setOnClickListener(v -> {
+            tasks.remove(position);        // remove from list
+            notifyItemRemoved(position);   // update RecyclerView
+            notifyItemRangeChanged(position, tasks.size());
+        });
     }
 
     @Override
@@ -42,11 +55,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         CheckBox cbDone;
-
+        Button delite;
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTaskTitle);
             cbDone = itemView.findViewById(R.id.cbDone);
+            delite = itemView.findViewById(R.id.delite);
         }
     }
 }
