@@ -38,6 +38,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         holder.cbDone.setOnCheckedChangeListener((buttonView, isChecked) -> {
             currentTask.setDone(isChecked);
+            if (isChecked) {
+                holder.tvTitle.setText(strike(currentTask.getTitle()));
+            } else {
+                holder.tvTitle.setText(currentTask.getTitle());
+            }
+
         });
 
         holder.tvTitle.setText(currentTask.getTitle());
@@ -51,6 +57,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public int getItemCount() { return tasks.size(); }
+
+    public static String strike(String text) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            sb.append(c).append("\u0335");
+        }
+        return sb.toString();
+    }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
